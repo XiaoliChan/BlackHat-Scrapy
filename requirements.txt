@@ -1,0 +1,7 @@
+bs4
+pyppeteer
+asyncio
+regex
+psutil
+lxml
+multiprocess

@@ -1,0 +1,41 @@
+name: Run Scrapy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        sudo apt update && sudo apt install wget
+        
+    - name: Create save folder
+      run: mkdir ${{ github.workspace }}/save
+      
+    - name: Run with script
+      run: python scrapy.py
+
+    - name: Tar files
+      run: tar -zcvf BlackHat-PDF.tar.gz -C ${{ github.workspace }} save/
+
+    - name: Deliver pdf file
+      uses: actions/upload-artifact@v2
+      with:
+        name: BlackHat-PDF
+        path: BlackHat-PDF.tar.gz
