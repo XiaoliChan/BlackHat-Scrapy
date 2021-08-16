@@ -11,7 +11,7 @@ async def main(target):
     for url in target:
         await page.goto(url)
         #Need to wait
-        await asyncio.sleep(3)
+        await asyncio.sleep(1)
         content = await page.content()
         _return.append(content)
     await browser.close()
