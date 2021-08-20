@@ -52,7 +52,11 @@ def sort_PDF():
         response = asyncio.get_event_loop().run_until_complete(main([url]))
         soup = BeautifulSoup(response[0],'lxml')
         print(url)
-        main_div = soup.find('div', class_="bhpresentation").find_all('a')
+        div = soup.find('div', class_="bhpresentation")
+       
+        if not div:
+            continue
+        main_div = div.find_all('a')
         try:
             All_PDF.append(main_div[0]['href'].strip())
         except:
